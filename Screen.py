@@ -13,7 +13,7 @@ finish = False
 x = 0
 y = 0
 
-def print_bush(field_matrix):
+def print_bush(bush_matrix):
     for i in range(25):
         for j in range(50):
             if bush_matrix[i][j] == "bush":
@@ -21,10 +21,19 @@ def print_bush(field_matrix):
                 screen.blit(img, [i*30, j*15])
     pygame.display.update()
 
+def print_trap(full_matrix):
+    for i in range(25):
+        for j in range(50):
+            if full_matrix[i][j] == "trap":
+                img_trap.set_colorkey((20, 20, 20))
+                screen.blit(img_trap, [i*30, j*15])
+    pygame.display.update()
+
 img = pygame.image.load(consts.IMAGE)
+img_trap = pygame.image.load(consts.IMAGE_TRAP)
 field_matrix = MineField.matrix_construction()
-bush_matrix = MineField.fill_matrix(field_matrix, "bush", screen, img)
-full_matrix = MineField.fill_matrix(bush_matrix, "trap", screen, img)
+bush_matrix = MineField.fill_matrix(field_matrix, "bush")
+full_matrix = MineField.fill_matrix(bush_matrix, "trap")
 screen.fill(consts.GREEN_BACKGROUND)
 print_bush(bush_matrix)
 
@@ -44,11 +53,13 @@ while not finish:
     MineField.Flag(screen)
     print_bush(bush_matrix)
     pygame.display.update()
-
     for event in pygame.event.get():
         if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
             finish = True
     if event.type == pygame.KEYDOWN and (event.key == pygame.K_RETURN or event.key == pygame.K_KP_ENTER):
-        MineField.print_grid(screen)
+        print_trap(full_matrix)
+        MineField.print_grid(screen, x, y)
+        #print_bush(full_matrix)
 pygame.quit()
+
 
