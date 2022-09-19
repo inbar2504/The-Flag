@@ -4,4 +4,5 @@ GREEN_BACKGROUND = (0, 150, 0)
 PINK = (255, 20, 147)
 IMAGE = 'grass.png'
 COLOR_GRID = (0, 120, 0)
+IMAGE_TRAP = "mine.png"
 
