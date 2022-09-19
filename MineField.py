@@ -16,28 +16,28 @@ def matrix_construction():
             field_matrix[row].append("Free")
     return field_matrix
 
-def fill_matrix(field_matrix, sigh, screen, img):
+def fill_matrix(field_matrix, sigh):
     count = 20
     for i in range(count):
         random_row = random.randint(1, 25)
         random_col = random.randint(1, 50)
-        if field_matrix[random_row-1][random_col-1] == "Free":
+        if field_matrix[random_row-1][random_col-1] == "Free" and field_matrix[random_row-2][random_col-2] == "Free":
             field_matrix[random_row-1][random_col-1] = sigh
-            if sigh == "bush":
-                img.set_colorkey(consts.GREEN_BACKGROUND)
-                screen.blit(img, [random_row*30, random_col*15])
-            pygame.display.flip()
         else:
             random_row = random.randint(1, 25)
             random_col = random.randint(1, 50)
             count += 1
     return (field_matrix)
 
-def print_grid(screen):
+def print_grid(screen,x_index,y_index):
     screen.fill((20, 20, 20))
     for x in range(0, 1000, 20):
         pygame.draw.line(screen, consts.COLOR_GRID, (1, x), (1000, x), 2)
         pygame.draw.line(screen, consts.COLOR_GRID, (x, 1), (x, 1000), 2)
+        solider_img = pygame.image.load("soldier_nigth.png")
+        screen.blit(solider_img, [x_index, y_index])
+        Screen.print_trap(Screen.full_matrix)
+        #pygame.display.flip()
         pygame.display.update()
     """
     screen.fill((0, 0, 0))
@@ -53,7 +53,5 @@ def print_grid(screen):
 
 field_matrix = []
 screen = pygame.display.set_mode((consts.WINDOW_WIDTH, consts.WINDOW_HEIGHT))
-img = pygame.image.load(consts.IMAGE).convert()
-field_matrix = matrix_construction()
-bush_matrix = fill_matrix(field_matrix, "bush", screen, img)
-full_matrix = fill_matrix(bush_matrix, "trap", screen, img)
+
+
